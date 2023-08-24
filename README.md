@@ -1,4 +1,4 @@
-# jabba_harvest
+# The Jabba Harvester
 
 
 AI Log Parser and Analyzer
