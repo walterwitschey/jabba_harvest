@@ -12,7 +12,7 @@ Usage Instructions
 
     You can install them using the following command:
 
-pip install pandas numpy
+    pip install pandas numpy
 
 Log Files: Place your AI log files in a directory. The script expects the log files to have filenames that match the pattern *_ai_log_*.
 
