@@ -27,5 +27,4 @@ def dcmcrawl(parentdir,outputfile):
         
         
 if __name__ == '__main__':
-    data = getAllStudyMetadata('/home/jabba/data/queue')
-    saveStudyData(data,'test.csv')
+    data = dcmcrawl('/home/jabba/data/queue','test.csv')
