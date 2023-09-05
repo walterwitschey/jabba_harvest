@@ -25,6 +25,7 @@ def getStudyMetadata(studydir):
         dcmdat = dcmread(first_dcm)
         ImageType = dcmdat.ImageType if hasattr(dcmdat,'ImageType') else None
         SeriesDescription = dcmdat.SeriesDescription if hasattr(dcmdat,'SeriesDescription') else None
+        ConvolutionKernel = dcmdat.ConvolutionKernel if hasattr(dcmdat,'ConvolutionKernel') else None
         studyinfo.append({
             'Series Number': dcmdat.SeriesNumber,
             'Series Description': SeriesDescription,
@@ -34,6 +35,9 @@ def getStudyMetadata(studydir):
             'Institution Name': dcmdat.InstitutionName,
             'Image Type': ImageType,
             'Size (MB)': series_size,
+            'Manufacturer': dcmdat.Manufacturer,
+            'Model': dcmdat.ManufacturerModelName,
+            'Convolution Kernel': ConvolutionKernel,
         })
         # print(f'series {dcmdat.SeriesNumber}: {dcmdat.SeriesDescription}')
 
