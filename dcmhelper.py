@@ -4,6 +4,15 @@ import re
 import pandas as pd
 
 def getStudyMetadata(studydir):
+    '''
+    Reads through a study of dicom files and returns a labeled dict of metadata
+
+    Inputs
+    studydir: Folder containing a single study 
+
+    Outputs
+    studyinfo: list of dictionaries with each dictionary continaing metadata for a dicom series 
+    '''
     
     studyinfo = []
     for subdir in os.listdir(studydir):
@@ -21,7 +30,7 @@ def getStudyMetadata(studydir):
             'Series Description': SeriesDescription,
             'Series Instance UID': dcmdat.SeriesInstanceUID,
             'Study Instance UID': dcmdat.StudyInstanceUID,
-            'Accession Number': dcmdat.AccessionNumber,
+            'accession': dcmdat.AccessionNumber,
             'Institution Name': dcmdat.InstitutionName,
             'Image Type': ImageType,
             'Size (MB)': series_size,
@@ -31,11 +40,26 @@ def getStudyMetadata(studydir):
     return studyinfo
 
 def getStudyDir(dcmparentdir, studyid):
+    '''
+    Gets a dicom study directory from a folder containing multiple dicom studies
+    '''
     studydir = [dir for dir in os.listdir(dcmparentdir) if re.match(f'{studyid}', dir)][0]
     studydir = os.path.join(dcmparentdir, studydir)
     return studydir
 
 def getAllStudyMetadata(dcmparentdir, VERBOSE=True):
+    '''
+    Reads through a directory of multiple dicom studies and returns metadata as a labeled dict
+
+    Inputs
+    dcmparentdir: folder contiaing multiple dicom studies
+    VERBOSE (default = True): set to True to print a running list of directories being parsed
+
+    Outputs
+    allstudyinfo: a list of dicts, each dict contianing metadata for a single dicom series (series are NOT nested within a study
+    level dict)
+
+    '''
     studydirs = [os.path.join(dcmparentdir,dir) for dir in os.listdir(dcmparentdir) if os.path.isdir(os.path.join(dcmparentdir,dir))]
     allstudyinfo = []
     for studydir in studydirs:
@@ -51,6 +75,8 @@ def getAllStudyMetadata(dcmparentdir, VERBOSE=True):
     return allstudyinfo
 
 def saveStudyData(data, outputfile):
+    '''
+    Saves list of dicts as a csv'''
     df = pd.DataFrame.from_dict(data)
     df.to_csv(outputfile)
     return True
