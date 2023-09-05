@@ -1,0 +1,10 @@
+#ignore test output
+*.html
+*.txt
+*.csv
+
+#ignore notebooks. These are just for local testing
+*.ipynb 
+
+#pycache
+*.pyc
